@@ -175,7 +175,17 @@ public class SWVContext {
         }
         public String[] getStringArray(String key, String[] defaultValue) {
             String value = properties.getProperty(key);
-            if (value == null || value.trim().isEmpty()) { return defaultValue; }
+
+            if (value == null) {
+                return defaultValue;
+            }
+
+            value = value.trim();
+
+            if (value.isEmpty()) {
+                return new String[0];
+            }
+
             return value.split("\\s*,\\s*");
         }
     }
