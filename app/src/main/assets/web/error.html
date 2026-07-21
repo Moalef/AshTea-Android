@@ -1,29 +1,171 @@
 <!DOCTYPE html>
-<!--
-  Smart WebView v8
-  https://github.com/mgks/Android-SmartWebView
--->
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-	<title>Connection Error</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>آشتی - خطا در اتصال</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #f7f7f9;
+            color: #222;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+        }
+
+        .error-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 28px;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            margin-bottom: 28px;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f4;
+            font-size: 38px;
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .error-message {
+            margin: 0 auto 28px;
+            line-height: 1.9;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .retry-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            background: #1a1a2e;
+            color: #ffffff;
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .retry-button:active {
+            transform: scale(0.98);
+        }
+
+        .retry-button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #999;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #ffffff;
+            }
+
+            .error-card {
+                background: #1e1e1e;
+            }
+
+            .logo {
+                color: #ffffff;
+            }
+
+            .error-icon {
+                background: #2a2a2a;
+            }
+
+            .error-message {
+                color: #b5b5b5;
+            }
+
+            .hint {
+                color: #777;
+            }
+
+            .retry-button {
+                background: #ffffff;
+                color: #1a1a2e;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<main class="error-container">
-	<div class="error-icon">⚠️</div>
-	<h1 class="error-title">No Internet Connection</h1>
-	<p class="error-message">
-		You are offline. Please check your internet connection and try again.
-	</p>
-	<a href="refresh:URL" class="retry-button">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-			<path d="M17.65,6.35C16.2,4.9,14.21,4,12,4A8,8,0,0,0,4,12a8,8,0,0,0,8,8c3.73,0,6.84-2.55,7.73-6h-2.08c-.82,2.33-3.04,4-5.65,4-3.31,0-6-2.69-6-6s2.69-6,6-6c1.66,0,3.14.69,4.22,1.78L13,11h7V4l-2.35,2.35z"/>
-		</svg>
-		<span>Retry</span>
-	</a>
-</main>
+
+    <main class="error-card">
+
+        <div class="logo">آشتی</div>
+
+        <div class="error-icon">⚠️</div>
+
+        <h1>اتصال برقرار نیست</h1>
+
+        <p class="error-message">
+            در برقراری ارتباط با آشتی مشکلی پیش آمده است.
+            لطفاً اتصال اینترنت خود را بررسی کنید و دوباره تلاش کنید.
+        </p>
+
+        <a href="refresh:URL" class="retry-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M17.65,6.35C16.2,4.9,14.21,4,12,4A8,8,0,0,0,4,12a8,8,0,0,0,8,8c3.73,0,6.84-2.55,7.73-6h-2.08c-.82,2.33-3.04,4-5.65,4-3.31,0-6-2.69-6-6s2.69-6,6-6c1.66,0,3.14.69,4.22,1.78L13,11h7V4l-2.35,2.35z"/>
+            </svg>
+
+            <span>تلاش مجدد</span>
+        </a>
+
+        <div class="hint">
+            اگر از VPN استفاده می‌کنید، آن را خاموش کنید و دوباره تلاش کنید.
+        </div>
+
+    </main>
+
 </body>
 </html>

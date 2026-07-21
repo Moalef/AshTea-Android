@@ -1,85 +1,165 @@
 <!DOCTYPE html>
-<!--
-  Smart WebView v8 - Offline Test Page
-  https://github.com/mgks/Android-SmartWebView
--->
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-	<title>Smart WebView - Offline</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="script.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>آشتی - بدون اتصال</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #f7f7f9;
+            color: #222;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+        }
+
+        .offline-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 28px;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            margin-bottom: 28px;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f4;
+            font-size: 38px;
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0 auto 28px;
+            line-height: 1.9;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .retry-button {
+            display: inline-block;
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            background: #1a1a2e;
+            color: #ffffff;
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .retry-button:active {
+            transform: scale(0.98);
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #ffffff;
+            }
+
+            .offline-card {
+                background: #1e1e1e;
+            }
+
+            .logo {
+                color: #ffffff;
+            }
+
+            .icon {
+                background: #2a2a2a;
+            }
+
+            p {
+                color: #b5b5b5;
+            }
+
+            .hint {
+                color: #777;
+            }
+
+            .retry-button {
+                background: #ffffff;
+                color: #1a1a2e;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<header class="app-header">
-	<img src="swv_splash_white.png" class="header-logo" alt="Smart WebView Logo" />
-	<p>You are currently offline. Some features below work without an internet connection.</p>
-	<h2>Offline Mode</h2>
-</header>
 
-<main class="container">
-	<div class="card">
-		<a href="https://mgks.github.io/Android-SmartWebView/" class="action-button online-button">
-			<svg width="75" height="75" viewBox="0 0 2.25 2.25" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#fff" stroke-width=".188" stroke-linecap="round" stroke-linejoin="round" d="M1.241 1.772a.07.07 0 0 1-.071.071.07.07 0 0 1-.071-.071.071.071 0 0 1 .142 0m-.45-.193a.43.43 0 0 1 .219-.201m-.477-.054a.8.8 0 0 1 .212-.205m1.061.205a.78.78 0 0 0-.396-.293m.65.041a1.13 1.13 0 0 0-.89-.433q-.067 0-.132.008m-.757.423A1 1 0 0 1 .504.862"/><path stroke="#fff" stroke-width=".188" stroke-linecap="round" d="m.414.379 1.558 1.645"/></svg>
-			<br />
-			Go Online & Test Full Features
-		</a>
-	</div>
+    <main class="offline-card">
 
-	<div class="card">
-		<h2><span class="icon">🎨</span> Theme</h2>
-		<p>Switch between light and dark themes. The initial theme is based on your system setting.</p>
-		<div class="theme-switcher" id="theme-switcher">
-			<button data-theme="light">Light</button>
-			<button data-theme="dark">Dark</button>
-			<button data-theme="system">System</button>
-		</div>
-	</div>
+        <div class="logo">آشتی</div>
 
-	<div class="card">
-		<h2><span class="icon">🖼️</span> File Upload (Offline Test)</h2>
-		<p>Select an image. Previews are generated by local JavaScript and do not require a connection.</p>
-		<form>
-			<label for="add-img" class="file-input-label">Choose Image</label>
-			<input type="file" accept="image/*" id="add-img" multiple="multiple">
-			<div class="gallery"></div>
-		</form>
-	</div>
+        <div class="icon">↯</div>
 
-	<div class="card">
-		<h2><span class="icon">📍</span> GPS Location</h2>
-		<p>Request device location. This uses the device's GPS and works offline.</p>
-		<button onclick="fetchLocation()" class="action-button">
-			Fetch Current Location
-		</button>
-		<div class="fetch-loc">Location will appear here...</div>
-	</div>
+        <h1>اتصال برقرار نیست</h1>
 
-	<div class="card">
-		<h2><span class="icon">🔔</span> Native Actions</h2>
-		<p>Trigger native device functionality directly from the web.</p>
-		<a href="fcm:" class="action-button">Send Test Notification</a>
-		<a href="print:" class="action-button">Print This Page</a>
-	</div>
+        <p>
+            در حال حاضر امکان اتصال به آشتی وجود ندارد.
+            لطفاً اتصال اینترنت خود را بررسی کنید و دوباره تلاش کنید.
+        </p>
 
-	<div class="feature-list-block">
-		<h3><span class="icon">🧩</span> More Features You Can Use</h3>
-		<ul class="feature-list">
-			<li>🗂️ File uploads with camera & gallery picker</li>
-			<li>🧭 URL whitelisting / blocking</li>
-			<li>🎛️ Fullscreen, orientation & zoom controls</li>
-			<li>🔐 HTTP auth, headers & POST support</li>
-			<li>🖥️ Custom error pages</li>
-			<li>🔗 Deeplink handling</li>
-		</ul>
-		<small><a href="https://mgks.github.io/Android-SmartWebView/documentation/features/" target="_blank">View full feature list →</a></small>
-	</div>
+        <button class="retry-button" onclick="retryConnection()">
+            تلاش مجدد
+        </button>
 
-</main>
+        <div class="hint">
+            اگر از VPN استفاده می‌کنید، آن را خاموش کنید و دوباره تلاش کنید.
+        </div>
 
-<footer class="app-footer">
-	<p>Smart WebView</p>
-</footer>
+    </main>
+
+    <script>
+        function retryConnection() {
+            window.location.href = "https://ashtea.ir/";
+        }
+    </script>
+
 </body>
 </html>

@@ -686,14 +686,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (SWVContext.ASWP_PULLFRESH) {
             pullRefresh.setOnRefreshListener(() -> {
-                // Pass the current activity context to the pull_fresh method
+                // Reload the current WebView page
                 fns.pull_fresh(MainActivity.this);
-                pullRefresh.setRefreshing(false);
             });
 
-            // Only enable pull-to-refresh when at the top of the page
             SWVContext.asw_view.getViewTreeObserver().addOnScrollChangedListener(
-                    () -> pullRefresh.setEnabled(SWVContext.asw_view.getScrollY() == 0));
+                    () -> pullRefresh.setEnabled(
+                            SWVContext.asw_view.getScrollY() == 0
+                    )
+            );
         } else {
             pullRefresh.setRefreshing(false);
             pullRefresh.setEnabled(false);
@@ -954,6 +955,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
+            // Stop the pull-to-refresh spinner after the page has finished loading
+            SwipeRefreshLayout pullRefresh = findViewById(R.id.pullfresh);
+            if (pullRefresh != null) {
+                pullRefresh.setRefreshing(false);
+            }
 
             SWVContext.getPluginManager().onPageFinished(url);
 
