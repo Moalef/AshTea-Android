@@ -245,7 +245,7 @@ public class SWVContext {
         // --- Plugins & Permissions ---
         ASWP_ENABLED_PLUGINS = config.getStringArray("plugins.enabled", new String[]{"AdMobPlugin","JSInterfacePlugin","ToastPlugin","QRScannerPlugin","BiometricPlugin","ImageCompressionPlugin"});
         SWV_PLAYGROUND = config.getBoolean("plugins.playground.enabled", true);
-        ASWP_REQUIRED_PERMISSIONS = config.getStringArray("permissions.on.launch", new String[]{"NOTIFICATIONS", "LOCATION"});
+        ASWP_REQUIRED_PERMISSIONS = config.getStringArray("permissions.on.launch", new String[]{"NOTIFICATIONS"});
         // Plugin Configurations
         // RatingsPlugin
         ASWR_DAYS = config.getInt("rating.install.days", 3);

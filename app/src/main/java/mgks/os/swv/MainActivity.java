@@ -453,34 +453,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Setup the download listener for WebView
      */
-    private void setupDownloadListener() {
-        SWVContext.asw_view.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
-            // We only need storage permission for downloads on older Android versions.
-            // On modern Android, DownloadManager handles it. But a check is still good practice.
-            if (!permissionManager.isStoragePermissionGranted()) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionManager.STORAGE_REQUEST_CODE);
-                Toast.makeText(this, "Storage permission is required to download files.", Toast.LENGTH_LONG).show();
-            } else {
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+    /**
+ * Setup the download listener for WebView
+ */
+private void setupDownloadListener() {
+    SWVContext.asw_view.setDownloadListener(
+            (url, userAgent, contentDisposition, mimeType, contentLength) -> {
+
+                DownloadManager.Request request =
+                        new DownloadManager.Request(Uri.parse(url));
 
                 request.setMimeType(mimeType);
-                String cookies = CookieManager.getInstance().getCookie(url);
-                request.addRequestHeader("cookie", cookies);
-                request.addRequestHeader("User-Agent", userAgent);
-                request.setDescription(getString(R.string.dl_downloading));
-                request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                        URLUtil.guessFileName(url, contentDisposition, mimeType));
 
-                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                assert dm != null;
-                dm.enqueue(request);
-                Toast.makeText(this, getString(R.string.dl_downloading2), Toast.LENGTH_LONG).show();
+                String cookies = CookieManager
+                        .getInstance()
+                        .getCookie(url);
+
+                if (cookies != null) {
+                    request.addRequestHeader("cookie", cookies);
+                }
+
+                request.addRequestHeader("User-Agent", userAgent);
+
+                request.setDescription(
+                        getString(R.string.dl_downloading)
+                );
+
+                request.setTitle(
+                        URLUtil.guessFileName(
+                                url,
+                                contentDisposition,
+                                mimeType
+                        )
+                );
+
+                request.allowScanningByMediaScanner();
+
+                request.setNotificationVisibility(
+                        DownloadManager.Request
+                                .VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+                );
+
+                request.setDestinationInExternalPublicDir(
+                        Environment.DIRECTORY_DOWNLOADS,
+                        URLUtil.guessFileName(
+                                url,
+                                contentDisposition,
+                                mimeType
+                        )
+                );
+
+                DownloadManager dm =
+                        (DownloadManager) getSystemService(
+                                DOWNLOAD_SERVICE
+                        );
+
+                if (dm != null) {
+                    dm.enqueue(request);
+
+                    Toast.makeText(
+                            this,
+                            getString(R.string.dl_downloading2),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
             }
-        });
-    }
+    );
+}
 
     /**
      * Create the WebChromeClient for WebView
@@ -514,15 +553,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                if (permissionManager.isLocationPermissionGranted()) {
-                    callback.invoke(origin, true, false);
-                } else {
-                    // If permission is not granted, we should request it.
-                    // We can re-use the initial request logic.
-                    permissionManager.requestInitialPermissions();
+            @Override
+                public void onGeolocationPermissionsShowPrompt(
+                        String origin,
+                        GeolocationPermissions.Callback callback) {
+
+                    // AshTea does not use device geolocation.
+                    // Do not request location permission.
+                    callback.invoke(origin, false, false);
                 }
-            }
         };
     }
 
@@ -901,45 +940,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Handle permission request results
      */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        @Override
+        public void onRequestPermissionsResult(
+                int requestCode,
+                @NonNull String[] permissions,
+                @NonNull int[] grantResults) {
 
-        SWVContext.getPluginManager().onRequestPermissionsResult(requestCode, permissions, grantResults);
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PermissionManager.INITIAL_REQUEST_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        Log.d(TAG, "Location permission granted.");
-                        // We can now safely get the location
+            SWVContext.getPluginManager().onRequestPermissionsResult(
+                    requestCode,
+                    permissions,
+                    grantResults
+            );
 
-                    } else {
-                        Log.w(TAG, "Location permission denied.");
-                    }
-                } else if (permissions[i].equals(Manifest.permission.POST_NOTIFICATIONS)) {
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        Log.d(TAG, "Notification permission granted.");
+            if (requestCode == PermissionManager.INITIAL_REQUEST_CODE) {
+                for (int i = 0; i < permissions.length; i++) {
 
-                        // Send a test notification under debug mode
-                        if(SWVContext.SWV_DEBUGMODE) {
-                            Firebase firebase = new Firebase();
-                            firebase.sendMyNotification(
-                                    "Yay! Firebase is working",
-                                    "This is a test notification in action.",
-                                    "OPEN_URI",
-                                    SWVContext.ASWV_URL,
-                                    null,
-                                    String.valueOf(SWVContext.ASWV_FCM_ID),
-                                    getApplicationContext());
+                    if (permissions[i].equals(Manifest.permission.POST_NOTIFICATIONS)) {
+
+                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            Log.d(TAG, "Notification permission granted.");
+
+                            // Send a test notification under debug mode
+                            if (SWVContext.SWV_DEBUGMODE) {
+                                Firebase firebase = new Firebase();
+                                firebase.sendMyNotification(
+                                        "Yay! Firebase is working",
+                                        "This is a test notification in action.",
+                                        "OPEN_URI",
+                                        SWVContext.ASWV_URL,
+                                        null,
+                                        String.valueOf(SWVContext.ASWV_FCM_ID),
+                                        getApplicationContext()
+                                );
+                            }
+
+                        } else {
+                            Log.w(TAG, "Notification permission denied.");
                         }
-                    } else {
-                        Log.w(TAG, "Notification permission denied.");
                     }
                 }
             }
         }
-    }
 
     /**
      * WebView client implementation

@@ -40,15 +40,9 @@
 		<uses-permission android:name="android.permission.VIBRATE" />
 
 	<!-- Permissions for File Access (Scoped Storage) -->
-	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 	<uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-		android:maxSdkVersion="32" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-		android:maxSdkVersion="28"
-		tools:ignore="ScopedStorage" />
 
 	<!-- Features (Optional) -->
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
