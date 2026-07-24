@@ -553,7 +553,6 @@ private void setupDownloadListener() {
             }
 
             @Override
-            @Override
                 public void onGeolocationPermissionsShowPrompt(
                         String origin,
                         GeolocationPermissions.Callback callback) {
