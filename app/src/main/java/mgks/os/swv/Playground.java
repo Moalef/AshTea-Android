@@ -108,13 +108,6 @@ public class Playground {
                 Log.i(TAG, "SUCCESS: DialogPlugin is available.");
             });
 
-            // Test for LocationPlugin
-            runPluginDiagnostic("LocationPlugin", plugin -> {
-                // Trigger a location fetch on launch for debugging purposes.
-                // The result will appear in the device's Logcat.
-                webView.evaluateJavascript("window.Location && window.Location.getCurrentPosition(function(lat,lng,err){ console.log('Playground Location Test:', {lat:lat, lng:lng, err:err}); })", null);
-                Log.i(TAG, "SUCCESS: LocationPlugin is available. Sent test request.");
-            });
 
             // Test for RatingPlugin
             runPluginDiagnostic("RatingPlugin", plugin -> {
